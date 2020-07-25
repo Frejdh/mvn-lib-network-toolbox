@@ -1,10 +1,11 @@
 Toolbox for networking
 -
-
-<h4>Module description</h4>
 This module is meant as a utility for networking and contains helpful
 methods and exceptions related to it.
-All available classes can be found [here](https://gits-15.sys.kth.se/frejdh/project-collection/tree/master/util/networking/toolbox).
+All available classes can be found [here](https://github.com/Frejdh/mvn-lib-network-toolbox/tree/master/src/main/java/com/frejdh/util/networking).
 
-<h4>Program arguments:</h4>
+## Program arguments:</h4>
 To print out request/parsing times in the console, use: `--captureTimes` <br>
+
+## Other libraries
+[Search for my other public libraries here](https://github.com/search?q=Frejdh%2Fmvn-lib-).
