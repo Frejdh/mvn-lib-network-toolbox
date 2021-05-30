@@ -20,7 +20,7 @@ To print out request/parsing times in the console, use: `--captureTimes` <br>
 <repositories> <!-- Required in order to resolve this package -->
     <repository>
         <id>mvn-lib-network-toolbox</id>
-        <url>https://raw.github.com/Frejdh/network-toolbox/mvn-repo/</url>
+        <url>https://raw.github.com/Frejdh/network-toolbox/releases/</url>
     </repository>
 </repositories>
 ```
