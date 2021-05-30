@@ -13,7 +13,7 @@ To print out request/parsing times in the console, use: `--captureTimes` <br>
     <dependency>
         <groupId>com.frejdh.util.networking</groupId>
         <artifactId>network-toolbox</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </dependency>
 </dependencies>
 
