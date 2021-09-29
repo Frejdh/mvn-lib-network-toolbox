@@ -1,7 +1,6 @@
 Toolbox for networking
 -
-This module is meant as a utility for networking and contains helpful
-methods and exceptions related to it.
+This module is meant as a utility for networking and contains helpful methods and exceptions related to it.
 All available classes can be found [here](https://github.com/Frejdh/mvn-lib-network-toolbox/tree/master/src/main/java/com/frejdh/util/networking).
 
 ## Program arguments:</h4>
