@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Sep 30 23:01:52 CEST 2021
+network-toolbox-1.0.1-javadoc.jar>=
+network-toolbox-1.0.1.jar>=
+network-toolbox-1.0.1.pom>=
+network-toolbox-1.0.1-sources.jar>=
