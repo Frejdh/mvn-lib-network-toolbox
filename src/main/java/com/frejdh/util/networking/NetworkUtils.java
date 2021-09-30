@@ -1,8 +1,7 @@
 package com.frejdh.util.networking;
 
-import com.frejdh.util.common.AnsiColor;
-import com.frejdh.util.common.AnsiLogger;
-import com.frejdh.util.common.AnsiOutput;
+import com.frejdh.util.common.ansi.AnsiLogger;
+import com.frejdh.util.common.ansi.models.AnsiColor;
 import com.frejdh.util.common.toolbox.DateUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
