@@ -48,7 +48,7 @@ public class SimpleHttpClient {
 
 	private String getUrl(SimpleHttpRequest request) {
 		String url = request.getBaseUrl();
-		if (!url.matches("(?i)http[s]?://")) {
+		if (!url.matches("(?i)http[s]?://.*")) {
 			url = "http://" + url;
 		}
 
@@ -59,14 +59,16 @@ public class SimpleHttpClient {
 			url += request.getPathVariable();
 		}
 
-		url += request.getParameters().entrySet().stream().map(param -> {
-			try {
-				return param.getKey() + "=" + URLEncoder.encode(param.getValue(), "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-				return "ERROR=ENCODING_ISSUE";
-			}
-		}).collect(Collectors.joining("&", "?", ""));
+		if (!request.getParameters().isEmpty()) {
+			url += request.getParameters().entrySet().stream().map(param -> {
+				try {
+					return param.getKey() + "=" + URLEncoder.encode(param.getValue(), "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+					return "ERROR=ENCODING_ISSUE";
+				}
+			}).collect(Collectors.joining("&", "?", ""));
+		}
 
 		return url;
 	}
