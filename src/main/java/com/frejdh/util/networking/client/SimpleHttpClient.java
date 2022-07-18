@@ -108,7 +108,7 @@ public class SimpleHttpClient {
 		}
 		String url = getUrl(request);
 		HttpRequestEntityWithBody requestToSend = new HttpRequestEntityWithBody(request.getHttpMethod().name(), url);
-		requestToSend.setEntity(new StringEntity(request.getBody())); // Set the body; can be null
+		requestToSend.setEntity(request.getBody() != null ? new StringEntity(request.getBody()) : null); // Set the body; can be null
 		request.getHeaders().forEach(header -> requestToSend.setHeader(header.getKey(), header.getValue()));
 
 		// Get content

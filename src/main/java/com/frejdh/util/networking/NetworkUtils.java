@@ -1,26 +1,30 @@
 package com.frejdh.util.networking;
 
-import com.frejdh.util.common.ansi.AnsiLogger;
-import com.frejdh.util.common.ansi.models.AnsiColor;
 import com.frejdh.util.common.toolbox.DateUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapterFactory;
 import org.apache.commons.validator.routines.InetAddressValidator;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * Toolbox for networking. An environmental variable called 'captureTimes' may be used to print the times for converting the objects.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class NetworkUtils {
+
+	private static final Logger LOG = Logger.getLogger(NetworkUtils.class.getCanonicalName());
 
 	/**
 	 * Convert a BufferedReader instance to a string
@@ -41,8 +45,9 @@ public class NetworkUtils {
 			e.printStackTrace();
 		}
 
-		if (System.getProperty("captureTimes") != null)
-			AnsiLogger.information("BufferedReader to String took ", AnsiColor.BRIGHT_BLUE, (System.currentTimeMillis() - time), AnsiColor.DEFAULT, " ms");
+		if (System.getProperty("captureTimes") != null) {
+			LOG.info("BufferedReader to String took " + (System.currentTimeMillis() - time) + " ms");
+		}
 
 		return sb.toString();
 	}
@@ -60,8 +65,9 @@ public class NetworkUtils {
 		long time = System.currentTimeMillis();
 		Gson gson = new GsonBuilder().registerTypeAdapter(Calendar.class, new DateUtils.GregorianCalendarDeserializer()).create();
 		T instance = gson.fromJson(jsonString, objectClass);
-		if (System.getProperty("captureTimes") != null)
-			AnsiLogger.information("Json to Object took ", AnsiColor.BRIGHT_BLUE, (System.currentTimeMillis() - time), AnsiColor.DEFAULT, " ms");
+		if (System.getProperty("captureTimes") != null) {
+			LOG.info("Json to Object took " + (System.currentTimeMillis() - time) + " ms");
+		}
 		return instance;
 	}
 
@@ -95,8 +101,9 @@ public class NetworkUtils {
 
 		Gson gson = gsonBuilder.create();
 		T instance = gson.fromJson(jsonString, type);
-		if (System.getProperty("captureTimes") != null)
-			AnsiLogger.information("Json to Object took ", AnsiColor.BRIGHT_BLUE, (System.currentTimeMillis() - time), AnsiColor.DEFAULT, " ms");
+		if (System.getProperty("captureTimes") != null) {
+			LOG.info("Json to Object took " + (System.currentTimeMillis() - time) + " ms");
+		}
 		return instance;
 	}
 
@@ -128,14 +135,24 @@ public class NetworkUtils {
 		return jsonToObject(bufferedReaderToString(jsonBufferedReader), objectClass, typeAdapterFactories, typeAdapterPackages);
 	}
 
+	public static String getScheme(String url) throws URISyntaxException {
+		if (url == null) {
+			throw new URISyntaxException("null", "URL cannot be null");
+		}
+		else if (!url.contains("://") && !url.contains("@")) {
+			throw new URISyntaxException(url, "No scheme found");
+		}
+		return url.split("://|@", 2)[0];
+	}
+
 	/**
-	 * Returns a "base" URL. Supports both normal and IPv4 addresses.
+	 * Returns a host URL. Supports both normal and IPv4 addresses.
 	 * Example: 'https://stackoverflow.com/questions/' returns 'stackoverflow.com'.
 	 * @param url URL to cleanup
-	 * @return A new simplified URL
+	 * @return A new simplified URL with only the hostname and domain
 	 * @throws URISyntaxException Thrown if the URL couldn't be formatted
 	 */
-	public static String getBaseURL(String url) throws URISyntaxException {
+	public static String getHost(String url) throws URISyntaxException {
 		try {
 			if (url.matches(".*//.*")) { // Remove protocol part
 				url = url.split("//")[1];
@@ -158,7 +175,7 @@ public class NetworkUtils {
 			}
 			return url;
 		} catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-			throw new URISyntaxException(url, "Could not find URL base");
+			throw new URISyntaxException(Objects.toString(url, ""), "Could not find URL base");
 		}
 	}
 
